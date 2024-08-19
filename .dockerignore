@@ -1,0 +1,9 @@
+.editorconfig
+.env*
+.git*
+.idea
+.vscode
+vendor
+*.md
+*.xml
+*.yml
