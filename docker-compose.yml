@@ -1,0 +1,94 @@
+version: "3"
+
+services:
+  user-service:
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    env_file: ".env.user"
+    ports:
+      - "8000:8000"
+    networks:
+      - app_network
+    depends_on:
+      - user-db
+      - redis
+
+  admin-service:
+    build:
+      context: ./admin-service
+      dockerfile: Dockerfile
+    env_file: ".env.admin"
+    ports:
+      - "8001:8001"
+    networks:
+      - app_network
+    depends_on:
+      - admin-db
+      - redis
+
+  book-service:
+    build:
+      context: ./book-service
+      dockerfile: Dockerfile
+    env_file: ".env.book"
+    ports:
+      - "8002:8002"
+    networks:
+      - app_network
+    depends_on:
+      - book-db
+      - redis
+
+  user-db:
+    image: hub.hamdocker.ir/mysql:latest
+    container_name: user-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: userdb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: 12345
+      MYSQL_ROOT_PASSWORD: 12345
+    ports:
+      - "3306:3306"
+    networks:
+      - app_network
+
+  admin-db:
+    image: hub.hamdocker.ir/mysql:latest
+    container_name: admin-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: admindb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: 12345
+      MYSQL_ROOT_PASSWORD: 12345
+    ports:
+      - "3307:3306"
+    networks:
+      - app_network
+
+  book-db:
+    image: hub.hamdocker.ir/mysql:latest
+    container_name: book-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: bookdb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: 12345
+      MYSQL_ROOT_PASSWORD: 12345
+    ports:
+      - "3308:3306"
+    networks:
+      - app_network
+
+  redis:
+    image: hub.hamdocker.ir/redis:alpine
+    container_name: lib-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
+networks:
+  app_network:
+    driver: bridge
