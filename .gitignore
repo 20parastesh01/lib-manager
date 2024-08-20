@@ -1,3 +1,4 @@
 .env.user
 .env.admin
 .env.book
+.DS_Store

@@ -10,6 +10,8 @@ services:
       - "8000:8000"
     networks:
       - app_network
+    volumes:
+      - ./user-service/:/var/www/html
     depends_on:
       - user-db
       - redis
@@ -23,6 +25,8 @@ services:
       - "8001:8001"
     networks:
       - app_network
+    volumes:
+      - ./admin-service/:/var/www/html
     depends_on:
       - admin-db
       - redis
@@ -36,6 +40,8 @@ services:
       - "8002:8002"
     networks:
       - app_network
+    volumes:
+      - ./book-service/:/var/www/html
     depends_on:
       - book-db
       - redis
