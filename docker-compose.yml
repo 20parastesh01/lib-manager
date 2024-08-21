@@ -5,7 +5,21 @@ services:
     build:
       context: ./user-service
       dockerfile: Dockerfile
-    env_file: ".env.user"
+    env_file: ${ENV:-.env}
+    environment:
+      APP_NAME: ${USER_APP_NAME}
+      APP_ENV: ${USER_APP_ENV}
+      APP_KEY: ${USER_APP_KEY}
+      APP_DEBUG: ${USER_APP_DEBUG}
+      APP_URL: ${USER_APP_URL}
+      JWT_SECRET: ${JWT_SECRET}
+      DB_CONNECTION: ${USER_DB_CONNECTION}
+      DB_HOST: ${USER_DB_HOST}
+      DB_PORT: ${USER_DB_PORT}
+      DB_DATABASE: ${USER_DB_DATABASE}
+      DB_USERNAME: ${USER_DB_USERNAME}
+      DB_PASSWORD: ${USER_DB_PASSWORD}
+      REDIS_HOST: ${REDIS_HOST}
     ports:
       - "8000:8000"
     networks:
@@ -20,7 +34,21 @@ services:
     build:
       context: ./admin-service
       dockerfile: Dockerfile
-    env_file: ".env.admin"
+    env_file: ${ENV:-.env}
+    environment:
+      APP_NAME: ${ADMIN_APP_NAME}
+      APP_ENV: ${ADMIN_APP_ENV}
+      APP_KEY: ${ADMIN_APP_KEY}
+      APP_DEBUG: ${ADMIN_APP_DEBUG}
+      APP_URL: ${ADMIN_APP_URL}
+      JWT_SECRET: ${JWT_SECRET}
+      DB_CONNECTION: ${ADMIN_DB_CONNECTION}
+      DB_HOST: ${ADMIN_DB_HOST}
+      DB_PORT: ${ADMIN_DB_PORT}
+      DB_DATABASE: ${ADMIN_DB_DATABASE}
+      DB_USERNAME: ${ADMIN_DB_USERNAME}
+      DB_PASSWORD: ${ADMIN_DB_PASSWORD}
+      REDIS_HOST: ${REDIS_HOST}
     ports:
       - "8001:8001"
     networks:
@@ -35,7 +63,21 @@ services:
     build:
       context: ./book-service
       dockerfile: Dockerfile
-    env_file: ".env.book"
+    env_file: ${ENV:-.env}
+    environment:
+      APP_NAME: ${BOOK_APP_NAME}
+      APP_ENV: ${BOOK_APP_ENV}
+      APP_KEY: ${BOOK_APP_KEY}
+      APP_DEBUG: ${BOOK_APP_DEBUG}
+      APP_URL: ${BOOK_APP_URL}
+      JWT_SECRET: ${JWT_SECRET}
+      DB_CONNECTION: ${BOOK_DB_CONNECTION}
+      DB_HOST: ${BOOK_DB_HOST}
+      DB_PORT: ${BOOK_DB_PORT}
+      DB_DATABASE: ${BOOK_DB_DATABASE}
+      DB_USERNAME: ${BOOK_DB_USERNAME}
+      DB_PASSWORD: ${BOOK_DB_PASSWORD}
+      REDIS_HOST: ${REDIS_HOST}
     ports:
       - "8002:8002"
     networks:
@@ -50,11 +92,12 @@ services:
     image: hub.hamdocker.ir/mysql:latest
     container_name: user-db
     restart: unless-stopped
+    env_file: ${ENV:-.env}
     environment:
-      MYSQL_DATABASE: userdb
-      MYSQL_USER: user
-      MYSQL_PASSWORD: 12345
-      MYSQL_ROOT_PASSWORD: 12345
+      MYSQL_DATABASE: ${USER_MYSQL_DATABASE}
+      MYSQL_USER: ${USER_MYSQL_USER}
+      MYSQL_PASSWORD: ${USER_MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${USER_MYSQL_ROOT_PASSWORD}
     ports:
       - "3306:3306"
     networks:
@@ -64,11 +107,12 @@ services:
     image: hub.hamdocker.ir/mysql:latest
     container_name: admin-db
     restart: unless-stopped
+    env_file: ${ENV:-.env}
     environment:
-      MYSQL_DATABASE: admindb
-      MYSQL_USER: user
-      MYSQL_PASSWORD: 12345
-      MYSQL_ROOT_PASSWORD: 12345
+      MYSQL_DATABASE: ${ADMIN_MYSQL_DATABASE}
+      MYSQL_USER: ${ADMIN_MYSQL_USER}
+      MYSQL_PASSWORD: ${ADMIN_MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${ADMIN_MYSQL_ROOT_PASSWORD}
     ports:
       - "3307:3306"
     networks:
@@ -78,11 +122,12 @@ services:
     image: hub.hamdocker.ir/mysql:latest
     container_name: book-db
     restart: unless-stopped
+    env_file: ${ENV:-.env}
     environment:
-      MYSQL_DATABASE: bookdb
-      MYSQL_USER: user
-      MYSQL_PASSWORD: 12345
-      MYSQL_ROOT_PASSWORD: 12345
+      MYSQL_DATABASE: ${BOOK_MYSQL_DATABASE}
+      MYSQL_USER: ${BOOK_MYSQL_USER}
+      MYSQL_PASSWORD: ${BOOK_MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${BOOK_MYSQL_ROOT_PASSWORD}
     ports:
       - "3308:3306"
     networks:
